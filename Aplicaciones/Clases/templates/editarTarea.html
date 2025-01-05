@@ -1,0 +1,95 @@
+{% extends 'plantilla.html' %}
+
+{% block contenido %}
+<br>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="col-md-6">
+        <form action="/procesarEdicionTarea/" method="POST" enctype="multipart/form-data" class="p-4 border rounded bg-light">
+            <h3 class="text-center mb-4" style="color: #072366;">Actualizar Información de la Tarea:</h3>
+            {% csrf_token %}
+
+            <!-- Campo oculto para enviar el ID de la tarea -->
+            <input type="hidden" name="id" value="{{ tarea.id }}">
+
+            <!-- Campo para el título de la tarea -->
+            <div class="mb-3">
+                <label for="txt_titulo" class="form-label"><b>Título:</b></label>
+                <input type="text" class="form-control" name="txt_titulo" value="{{ tarea.titulo }}" id="txt_titulo" required>
+            </div>
+
+            <!-- Campo para la descripción -->
+            <div class="mb-3">
+                <label for="txt_descripcion" class="form-label"><b>Descripción:</b></label>
+                <textarea class="form-control" name="txt_descripcion" id="txt_descripcion" rows="4" required>{{ tarea.descripcion }}</textarea>
+            </div>
+
+            <!-- Campo para el archivo -->
+            <div class="mb-3">
+                <label for="txt_archivo" class="form-label"><b>Archivo (PDF, Word, Video):</b></label>
+                <input type="file" class="form-control" name="txt_archivo" id="txt_archivo">
+                {% if tarea.archivo %}
+                    <p>Archivo actual: <a href="{{ MEDIA_URL }}{{ tarea.archivo.name }}" target="_blank">Ver archivo</a></p>
+                {% endif %}
+            </div>
+
+            <!-- Campo para seleccionar el profesor -->
+            <div class="mb-3">
+                <label for="txt_profesor" class="form-label"><b>Profesor:</b></label>
+                <select name="profesor_id" id="profesor" required>
+                    <option value="">Seleccione un profesor</option>
+                    {% for profesor in profesores %}
+                        <option value="{{ profesor.id }}" {% if profesor.id == tarea.profesor.id %}selected{% endif %}>{{ profesor.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+   
+
+            <!-- Botones de acción -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn-guardar">Actualizar</button>
+              
+                <a href="/listadoTarea/" class="btn btn-secondary ">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Validación del formulario si es necesario
+        $("#frm_editar_tarea").validate({
+            rules: {
+                "txt_titulo": {
+                    required: true,
+                    minlength: 3
+                },
+                "txt_descripcion": {
+                    required: true,
+                    minlength: 10
+                },
+                "txt_profesor": {
+                    required: true
+                }
+            },
+            messages: {
+                "txt_titulo": {
+                    required: "Por favor, ingrese el título.",
+                    minlength: "El título debe tener al menos 3 caracteres."
+                },
+                "txt_descripcion": {
+                    required: "Por favor, ingrese la descripción.",
+                    minlength: "La descripción debe tener al menos 10 caracteres."
+                },
+                "txt_profesor": {
+                    required: "Por favor, seleccione un profesor."
+                }
+            },
+            submitHandler: function(form) {
+                form.submit(); // Envía el formulario solo si la validación pasa
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+    <div class="container my-5">
+    <h1 class="text-center mb-4"  style="color: #072366;">Crear Tarea</h1>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form action="/guardarTarea/" id="frm_nueva_tarea" method="post" enctype="multipart/form-data">
+            
+
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Guardar Tarea</button>
+            </form>
+        </div>
+        
+    </div>
+
+</div>
+
+{% endblock %}

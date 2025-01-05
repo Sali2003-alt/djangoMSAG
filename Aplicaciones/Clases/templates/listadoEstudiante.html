@@ -1,0 +1,41 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<br><br>
+<h3 class="text-center mb-4" style="color: #48c1b9;">Listado de Estudiantes</h3>
+
+<table class="table table-bordered table-striped table-hover" id="mitablaEstudiantes">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>APELLIDO</th>
+            <th>CORREO ELECTRÓNICO</th>
+            <th>TELÉFONO</th>
+            <th>ACCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for estudiante in estudiantes %}
+            <tr>
+                <td>{{ estudiante.id }}</td>
+                <td>{{ estudiante.nombre }}</td>
+                <td>{{ estudiante.apellido }}</td>
+                <td>{{ estudiante.email }}</td>
+                <td>{{ estudiante.telefono }}</td>
+               
+                <td>
+                    <a href="/editarEstudiante/{{ estudiante.id }}" class="btn btn-warning btn-sm">Editar</a>
+                    <a onclick="return confirm('¿Está seguro de eliminar este estudiante?');" href="/eliminarEstudiante/{{ estudiante.id }}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function() {
+        $('#mitablaEstudiantes').DataTable();
+    });
+</script>
+
+{% endblock %}

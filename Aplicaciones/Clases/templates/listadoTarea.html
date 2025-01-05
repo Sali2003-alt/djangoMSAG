@@ -1,0 +1,42 @@
+{% extends "./plantilla.html" %}
+{% load extra_filters %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: #072366;">Tareas Asignadas</h1>
+
+    {% for tarea in tareas %}
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title" style="color: #072366;">{{ tarea.titulo }}</h3>
+            <p class="card-text">{{ tarea.descripcion }}</p>
+
+            {% if tarea.archivo %}
+            <div class="mt-3">
+                <p><strong>Archivo adjunto:</strong></p>
+                {% with tarea.archivo.name|lower as archivo_name %}
+                    {% if archivo_name|is_mp4 %}
+                    <video width="100%" controls>
+                        <source src="{{ MEDIA_URL }}{{ tarea.archivo.url }}" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                    {% else %}
+                    <p class="text-muted">Este archivo no es un video compatible.</p>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            {% else %}
+            <p class="text-muted">No hay archivo adjunto.</p>
+            {% endif %}
+
+            <td>
+                 <!-- <a href="/editarTarea/{{ tarea.id }}" class="btn btn-info btn-sm">Editar</a> -->
+                <a onclick="return confirm('¿Está seguro de que desea eliminar esta tarea?');" href="/eliminarTarea/{{ tarea.id }}" class="btn btn-info btn-sm">Eliminar</a>
+            </td>
+            
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

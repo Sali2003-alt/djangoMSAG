@@ -1,0 +1,18 @@
+{% extends "plantilla.html" %}
+
+{% block contenido %}
+<div class="container my-5">
+    <h1 class="text-center mb-4" style="color: #072366;">Nueva Entrega</h1>
+    
+    <div class="card shadow-sm">
+       
+        <div class="card-body">
+            <form action="/guardarEntrega/" id="frm_nueva_entrega" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Enviar Entrega</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

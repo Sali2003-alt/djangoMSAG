@@ -1,0 +1,98 @@
+{% extends "./plantilla.html" %}
+{% block contenido %}
+<div class="container my-5">
+    <h2 class="text-center mb-4" style="color: #072366;">Registrar Nuevo Profesor</h2>
+    <div class="card shadow-sm">
+    <div class="card-body">
+  
+        <form action="/guardarProfesor/" id="frm_nuevo_profesor" method="post" >
+           
+            {% csrf_token %}
+
+            <!-- Campo para Nombre -->
+            <div class="mb-3">
+                <label for="txt_nombre" class="form-label">Nombre:</label>
+                <input type="text" class="form-control form-control-lg" name="txt_nombre" id="txt_nombre" placeholder="Ingrese el nombre" required>
+            </div>
+
+            <!-- Campo para Apellido -->
+            <div class="mb-3">
+                <label for="txt_apellido" class="form-label">Apellido:</label>
+                <input type="text" class="form-control form-control-lg" name="txt_apellido" id="txt_apellido" placeholder="Ingrese el apellido" required>
+            </div>
+
+            <!-- Campo para Email -->
+            <div class="mb-3">
+                <label for="txt_email" class="form-label">Correo Electrónico:</label>
+                <input type="email" class="form-control form-control-lg" name="txt_email" id="txt_email" placeholder="Ingrese el correo electrónico" required>
+            </div>
+
+            <!-- Campo para Teléfono -->
+            <div class="mb-3">
+                <label for="txt_telefono" class="form-label">Teléfono:</label>
+                <input type="text" class="form-control form-control-lg" name="txt_telefono" id="txt_telefono" placeholder="Ingrese el número de teléfono" required>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="/listadoProfesor/" class="btn btn-secondary ">Cancelar</a>
+            </div>
+        </form>
+        </div>
+    </div>
+
+  
+</div>
+
+<script>
+    // Validación del formulario (opcional)
+    $(document).ready(function() {
+        $("#frm_nuevo_profesor").validate({
+            rules: {
+                "txt_nombre": {
+                    required: true,
+                    minlength: 3
+                },
+                "txt_apellido": {
+                    required: true,
+                    minlength: 3
+                },
+                "txt_telefono": {
+                    required: true,
+                    digits: true,
+                    minlength: 10,
+                    maxlength: 10
+                },
+                "txt_email": {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                "txt_nombre": {
+                    required: "Por favor, ingrese el nombre.",
+                    minlength: "El nombre debe tener al menos 3 caracteres."
+                },
+                "txt_apellido": {
+                    required: "Por favor, ingrese el apellido.",
+                    minlength: "El apellido debe tener al menos 3 caracteres."
+                },
+                "txt_telefono": {
+                    required: "Por favor, ingrese el número de teléfono.",
+                    digits: "El teléfono debe contener solo números.",
+                    minlength: "El teléfono debe tener exactamente 10 dígitos.",
+                    maxlength: "El teléfono debe tener exactamente 10 dígitos."
+                },
+                "txt_email": {
+                    required: "Por favor, ingrese el correo electrónico.",
+                    email: "Por favor, ingrese una dirección de correo electrónico válida."
+                }
+            },
+            submitHandler: function(form) {
+                form.submit();
+            }
+        });
+    });
+</script>
+{% endblock %}

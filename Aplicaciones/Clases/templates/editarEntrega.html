@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+<div class="container my-5">
+    <h1 class="text-center mb-4" style="color: #072366;">Editar Entrega</h1>
+    
+    <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h5 class="card-title">Formulario de Edición de Entrega</h5>
+        </div>
+        <div class="card-body">
+            <form action="/procesarEdicionEntrega/" id="frm_editar_entrega" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Actualizar Entrega</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

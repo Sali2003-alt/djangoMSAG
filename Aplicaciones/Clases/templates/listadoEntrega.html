@@ -1,0 +1,38 @@
+{% extends "plantilla.html" %}
+
+{% block contenido %}
+<div class="container my-5">
+    <h1 class="text-center mb-4" style="color: #072366;">Tareas Entregadas</h1>
+
+    <div class="row">
+        {% for entrega in entregas %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title">{{ entrega.estudiante.nombre }} - {{ entrega.tarea.nombre }}</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Fecha de entrega:</strong> {{ entrega.fecha_entrega }}</p>
+                    <p><strong>Retroalimentación:</strong> {{ entrega.comentario }}</p>
+                    <p><strong>Archivo:</strong> <a href="{{ entrega.archivo.url }}" target="_blank" class="btn btn-primary btn-sm">Ver archivo</a></p>
+                </div>
+                <div class="card-footer text-muted">
+                    <small>Entrega realizada por: {{ entrega.estudiante.nombre }}</small>
+                    <td>
+                      
+                        <a onclick="return confirm('¿Está seguro de que desea eliminar esta tarea?');" href="/eliminarEntrega/{{ entrega.id }}" class="btn btn-info btn-sm">Eliminar</a>
+                    </td>
+                    
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">No hay entregas registradas aún.</p>
+        </div>
+       
+      
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
